@@ -25,6 +25,7 @@ public class AlgoritmosOrdenacion2020 {
     int[] lista1 = {13, 27, 455, 621, 23, 1, 15};
     int[] arrayParaBurbuja;
     int[] arrayParaInserccion;
+     int[] arrayParaShell;
 
     public void ordenacionInsercion(int[] numeros) {
         for (int i = 2; i < numeros.length; i++) {
@@ -48,6 +49,27 @@ public class AlgoritmosOrdenacion2020 {
         return numeros;
     }
 
+    public void shellShort(int[] numeros) {
+        int salto, aux;
+        boolean intercambio;
+        for (salto = numeros.length / 2; salto != 0; salto /= 5.5) {
+            intercambio = true;
+            while (intercambio) {
+                intercambio = false;
+                for (int i = salto; i < numeros.length; i += salto) {
+                    if (numeros[i - salto] > numeros[i]) {
+     //si los 2 numeros estan desordenados entre si, los intercambio y lo indico
+                        aux = numeros[i];
+                        numeros[i] = numeros[i - salto];
+                        numeros[i - salto] = aux;
+                        intercambio = true;
+
+                    }
+                }
+            }
+        }
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -63,9 +85,11 @@ public class AlgoritmosOrdenacion2020 {
         int[] numeros = ordenacion.generaNumerosRandom(rangoPrueba);
         ordenacion.arrayParaBurbuja = new int[rangoPrueba];
         ordenacion.arrayParaInserccion = new int[rangoPrueba];
+         ordenacion.arrayParaShell = new int[rangoPrueba];
         for (int i = 0; i < rangoPrueba; i++) {
             ordenacion.arrayParaBurbuja[i] = numeros[i];
             ordenacion.arrayParaInserccion[i] = numeros[i];
+            ordenacion.arrayParaShell[i] = numeros[i];
         }
         //aqui ya tengo dos copias exactas de la array de datos aleatorios 
 
@@ -78,11 +102,18 @@ public class AlgoritmosOrdenacion2020 {
         System.out.println("La burbuja ha tardado: " + (tiempoFinal - tiempoInicio));
 
         ///////////////////////////////////////////////////////////////////////7
-        
-         System.out.println("Empieza la inserccion Directa: ");
+        System.out.println("Empieza la inserccion Directa: ");
         tiempoInicio = System.currentTimeMillis();
 
         ordenacion.ordenacionInsercion(ordenacion.arrayParaInserccion);
+
+        tiempoFinal = System.currentTimeMillis();
+        System.out.println("La Inserccion Directa ha tardado: " + (tiempoFinal - tiempoInicio));
+        ////////////////////////////////////////////////////////////////////////
+         System.out.println("Empieza el Shell Short: ");
+        tiempoInicio = System.currentTimeMillis();
+
+        ordenacion.shellShort(ordenacion.arrayParaShell);
 
         tiempoFinal = System.currentTimeMillis();
         System.out.println("La Inserccion Directa ha tardado: " + (tiempoFinal - tiempoInicio));
